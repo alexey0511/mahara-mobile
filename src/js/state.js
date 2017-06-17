@@ -26,8 +26,8 @@ const defaultState = {
     server: {
         wwwroot: null,
         wstoken: null,
-        targetblogid: null,
-        targetfoldername: null,
+        defaultBlogId: null,
+        defaultFolderName: null,
         loginTypes: [LOGIN_TYPE.LOCAL],
         siteName: null,
         maharaVersion: null,
@@ -144,7 +144,7 @@ function MaharaState(state, action) {
         case STORAGE.SET_USER_SYNC_DATA:
             // state.server = state.server || {};
             state.server.sync.blogs = action.sync.blogs;
-            state.server.sync.folders = state.folders;
+            state.server.sync.folders = action.sync.folders;
             state.server.sync.notifications = action.sync.notifications;
             state.server.sync.tags = action.sync.tags;
             state.server.profile = action.sync.userprofile;
@@ -169,23 +169,26 @@ function MaharaState(state, action) {
                 state.server.icondata = defaultState.server.icondata;
             }
 
-            // TODO: Let the user select the blog, instead of just using
-            // the first one
-            if (action.sync.blogs.length) {
-                state.server.targetblogid = action.sync.blogs[0].id;
+            // set first blog as default if haven't been selected previously
+            if (!state.server.defaultBlogId && action.sync.blogs.length) {
+                state.server.defaultBlogId = action.sync.blogs[0].id;
             }
 
-            // TODO: Let the user select the folder, instead of just using one.
-            state.server.targetfoldername = "Mahara Mobile Uploads";
-            // if (action.sync.folders.length) {
-            //     state.server.targetfoldername = action.sync.folders[0].title;
-            // }
+            if (!state.server.defaultFolderName && action.sync.folders.length) {
+                state.server.defaultFolderName = action.sync.folders[0].title;
+            }
+
             break;
         case STORAGE.SET_USER_LANGUAGE:
             // e.g. ["en-GB", 'en', 'en']
             state.lang = [action.language, action.language.split('-')[0], STORAGE.DEFAULT_LANGUAGE];
             break;
-
+        case STORAGE.SET_DEFAULT_JOURNAL:
+            state.server.defaultBlogId = action.journal;
+            break;
+        case STORAGE.SET_DEFAULT_FOLDER:
+            state.server.defaultFolderName = action.folder;
+            break;
         case LOGIN.STOP_GET_USER_ICON:
             state.needToRefreshIcon = undefined;
             break;
@@ -220,6 +223,7 @@ function MaharaState(state, action) {
             //     window.localStorage.setItem(action.fileEntry.guid, action.fileEntry.dataURL);
             //     action.fileEntry.dataURL = true;
             // }
+            action.fileEntry.targetFolderName = state.server.defaultFolderName;
             state.pendingUploads.push(action.fileEntry);
             break;
         case FILE_ENTRY.EDIT_ENTRY:
@@ -230,6 +234,7 @@ function MaharaState(state, action) {
                         state.pendingUploads[i].title = action.imageDetails.title;
                         state.pendingUploads[i].description = action.imageDetails.description;
                         state.pendingUploads[i].tags = action.imageDetails.tags;
+                        state.pendingUploads[i].targetFolderName = action.imageDetails.targetFolderName;
                         break;
                     }
                 }

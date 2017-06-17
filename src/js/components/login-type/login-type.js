@@ -1,13 +1,12 @@
-/*jshint esnext: true */
-import React                  from 'react';
+import React, { PropTypes }   from 'react';
 import MaharaBaseComponent    from '../base.js';
 import StateStore,
-{maharaServer}         from '../../state.js';
+{maharaServer}                from '../../state.js';
 import Router                 from '../../router.js';
 import {PAGE_URL,
     LOGIN_TYPE,
     STORAGE,
-    LOGIN}              from '../../constants.js';
+    LOGIN}                    from '../../constants.js';
 
 class LoginTypePage extends MaharaBaseComponent {
 
@@ -18,7 +17,7 @@ class LoginTypePage extends MaharaBaseComponent {
             </section>;
         } else {
             return <section>
-                <p className="textLinks">({this.props.server.wwwroot}) <a onClick={this.changeServer} className="changeServer">{this.gettext('wizard_change_server') }</a></p>
+                <p className="textLinks">{this.props.server.wwwroot} <a onClick={this.changeServer} className="changeServer">{this.gettext('change') }</a></p>
                 <h2>{this.gettext('login_types_header') }</h2>
                 {this.supportsSingleSignOn() }
                 {this.supportsLocalLogin() }
@@ -69,3 +68,7 @@ class LoginTypePage extends MaharaBaseComponent {
 }
 
 export default LoginTypePage;
+
+LoginTypePage.propTypes = {
+  server: PropTypes.object.isRequired
+};

@@ -1,21 +1,20 @@
-/*jshint esnext: true */
-import React               from 'react';
-import MaharaBaseComponent from '../base.js';
+import React, { PropTypes } from 'react';
+import MaharaBaseComponent  from '../base.js';
 import StateStore,
-{maharaServer}      from '../../state.js';
-import Router              from '../../router.js';
+{maharaServer}              from '../../state.js';
+import Router               from '../../router.js';
 import {PAGE,
     LOGIN,
     PAGE_URL,
-    STORAGE}           from '../../constants.js';
+    STORAGE}                from '../../constants.js';
 
 class TokenPage extends MaharaBaseComponent {
 
     render() {
         return <section>
             <p className="textLinks">
-                {this.props.server && this.props.server.wwwroot ? "(" + this.props.server.wwwroot + ")" : ""}
-                <button onClick={this.backButton} className="changeServer">{this.gettext('wizard_change_server') }</button>
+                {this.props.server && this.props.server.wwwroot ? this.props.server.wwwroot : ""}
+                <button onClick={this.backButton} className="changeServer">{this.gettext('change') }</button>
             </p>
             <p className="helpText">{this.gettext('token_page_instructions') }</p>
             <label htmlFor="token">{this.gettext('token_field_label') }</label>
@@ -52,3 +51,7 @@ class TokenPage extends MaharaBaseComponent {
 }
 
 export default TokenPage;
+
+TokenPage.propTypes = {
+  server: PropTypes.object.isRequired
+};

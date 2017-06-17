@@ -1,21 +1,20 @@
-/*jshint esnext: true */
-import React               from 'react';
-import MaharaBaseComponent from '../base.js';
+import React, { PropTypes }   from 'react';
+import MaharaBaseComponent    from '../base.js';
 import StateStore,
-{maharaServer}      from '../../state.js';
-import Router              from '../../router.js';
+{maharaServer}                from '../../state.js';
+import Router                 from '../../router.js';
 import {PAGE,
     LOGIN,
     PAGE_URL,
-    STORAGE}           from '../../constants.js';
+    STORAGE}                  from '../../constants.js';
 
 class LoginPage extends MaharaBaseComponent {
 
     render() {
         return <section>
             <p className="textLinks">
-                {this.props.server && this.props.server.wwwroot ? "(" + this.props.server.wwwroot + ")" : ""}
-                <button onClick={this.backButton} className="changeServer">{this.gettext('wizard_change_server') }</button>
+                {this.props.server && this.props.server.wwwroot ? this.props.server.wwwroot : ""}
+                <button onClick={this.backButton} className="changeServer">{this.gettext('change') }</button>
             </p>
             <form onSubmit={this.nextButton} noValidate>
                 <label htmlFor="username">{this.gettext('username') }</label>
@@ -77,3 +76,7 @@ class LoginPage extends MaharaBaseComponent {
 }
 
 export default LoginPage;
+
+LoginPage.propTypes = {
+  server: PropTypes.object.isRequired
+};

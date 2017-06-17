@@ -1,4 +1,3 @@
-/*jshint esnext: true */
 import React                from 'react';
 import ReactDOM             from 'react-dom';
 import "babel-polyfill";
@@ -125,6 +124,7 @@ const render = () => {
     // these were in a different function, also subscribed
     // to the statestore.
     if (state.uploadGuid) {
+        StateStore.dispatch({ type: PENDING.STOP_UPLOADS });
         uploadNextItem(state);
     }
     if (state.getProfile) {
@@ -177,14 +177,15 @@ fsLib.init();
 StateStore.subscribe(render);
 StateStore.dispatch({type: 'launch'});
 
-// Set user language
 
 
-navigator.globalization.getPreferredLanguage(
-  function(locale) {
-    StateStore.dispatch({type: 'SET_USER_LANGUAGE', language: locale.value});
-  },
-  function() {
-    StateStore.dispatch({type: 'SET_USER_LANGUAGE', language: STORAGE.DEFAULT_LANGUAGE});
-  }
- );
+if (!StateStore.getState().lang) {
+  // Set user language
+  navigator.globalization.getPreferredLanguage(
+    function(locale) {
+      StateStore.dispatch({type: 'SET_USER_LANGUAGE', language: locale.value});
+    },
+    function() {
+      StateStore.dispatch({type: 'SET_USER_LANGUAGE', language: STORAGE.DEFAULT_LANGUAGE});
+    });
+}

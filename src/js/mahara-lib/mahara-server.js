@@ -32,12 +32,12 @@ export default class MaharaServer {
     loadState(server) {
         this.wstoken = server.wstoken;
         this.wwwroot = server.wwwroot;
-        this.targetblogid = server.targetblogid;
-        this.targetfoldername = server.targetfoldername;
+        this.defaultBlogId = server.defaultBlogId;
+        this.defaultFolderName = server.defaultFolderName;
     }
 
     getWSToken = () => this.wstoken;
     getWwwroot = () => this.wwwroot;
-    getTargetBlogId = () => this.targetblogid;
-    getTargetFolderName = () => this.targetfoldername;
+    getDefaultBlogId = () => this.defaultBlogId;
+    getDefaultFolderName = () => this.defaultFolderName;
 }
