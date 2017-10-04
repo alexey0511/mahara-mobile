@@ -19,6 +19,7 @@ class ImageDetails extends MaharaBaseComponent {
         };
 
         this.changeTags = this.changeTags.bind(this);
+        this.changeTagsOnBlur = this.changeTagsOnBlur.bind(this);
         this.changeFolder = this.changeFolder.bind(this);
         this.tags = this.props.imageToEdit.tags;
     }
@@ -45,6 +46,7 @@ class ImageDetails extends MaharaBaseComponent {
                 multi={true}
                 value={this.state.selectedTags}
                 onChange={this.changeTags}
+                onBlur={this.changeTagsOnBlur}
                 clearable={false}
                 options={tagsOptions}
               />
@@ -65,6 +67,14 @@ class ImageDetails extends MaharaBaseComponent {
       this.setState({ selectedTags: tagsObj.map(t => t.label) });
       // parent component accesses it this way
       this.tags = tagsObj.map(t => t.label);
+    }
+
+    changeTagsOnBlur(e) {
+      let newTags = this.state.selectedTags.slice(0); // copy array
+      newTags.push(e.target.value);
+
+      this.setState({ selectedTags: newTags });
+      this.tags = newTags;
     }
 
     changeFolder(selectedFolder) {
