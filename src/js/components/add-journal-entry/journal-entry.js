@@ -1,11 +1,10 @@
 import React, { PropTypes }   from 'react';
 import MaharaBaseComponent from '../base.js';
 import Select, { Creatable } from 'react-select';
-import { setTextareaHeight, abc } from '../../util';
+import { setTextareaHeight } from '../../util';
 
 class JournalEntry extends MaharaBaseComponent {
     constructor(props) {
-        console.log(abc);
         super(props);
         let userTags = props.server.sync.tags.map(tag => tag.tag);
 
@@ -21,6 +20,8 @@ class JournalEntry extends MaharaBaseComponent {
             selectedTags: props.guid ? props.tags : [],
             targetBlogId: props.guid ? props.targetBlogId : this.props.server.defaultBlogId
         };
+
+        this.changeTagsOnBlur = this.changeTagsOnBlur.bind(this);
         this.changeTags = this.changeTags.bind(this);
         this.changeJournal = this.changeJournal.bind(this);
     }
@@ -44,6 +45,7 @@ class JournalEntry extends MaharaBaseComponent {
                 multi={true}
                 value={this.state.selectedTags}
                 onChange={this.changeTags}
+                onBlur={this.changeTagsOnBlur}
                 clearable={false}
                 options={tagsOptions}
               />
@@ -64,6 +66,13 @@ class JournalEntry extends MaharaBaseComponent {
       this.setState({ selectedTags: tagsObj.map(t => t.label) });
       // parent component accesses it this way
       this.tags = tagsObj.map(t => t.label);
+    }
+    changeTagsOnBlur(e) {
+      let newTags = this.state.selectedTags.slice(0); // copy array
+      newTags.push(e.target.value);
+
+      this.setState({ selectedTags: newTags });
+      this.tags = newTags;
     }
 
     changeJournal(newJournal) {
