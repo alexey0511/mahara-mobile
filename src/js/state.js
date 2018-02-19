@@ -1,5 +1,5 @@
 /*jshint esnext: true */
-import {createStore }  from 'redux';
+import { createStore }  from 'redux';
 import {Provider}      from 'react-redux';
 import MaharaServer    from './mahara-lib/mahara-server.js';
 import Storage         from './storage.js';
@@ -174,10 +174,9 @@ function MaharaState(state, action) {
                 state.server.defaultBlogId = action.sync.blogs[0].id;
             }
 
-            if (!state.server.defaultFolderName && action.sync.folders.length) {
-                state.server.defaultFolderName = action.sync.folders[0].title;
+            if (!state.server.defaultFolderName) {
+              state.server.defaultFolderName = STORAGE.DEFAULT_FOLDER;
             }
-
             break;
         case STORAGE.SET_USER_LANGUAGE:
             // e.g. ["en-GB", 'en', 'en']
