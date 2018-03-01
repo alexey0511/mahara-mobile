@@ -39,7 +39,7 @@ class SettingsTab extends MaharaBaseComponent {
         }
 
         if (!defaultLanguage) {
-          defaultLanguage = {'id': '', 'title': ''};
+          defaultLanguage = {'id': '', 'text': ''};
         }
 
         // journal select setup
@@ -49,7 +49,7 @@ class SettingsTab extends MaharaBaseComponent {
         if (server.defaultBlogId && journalOptions.length) {
           defaultJournal = journalOptions.find(blog => blog.id === server.defaultBlogId);
         } else {
-          defaultJournal = { 'id': '', 'title': '' };
+          defaultJournal = { 'id': '', 'text': '' };
         }
 
           // folder select setup
@@ -58,8 +58,10 @@ class SettingsTab extends MaharaBaseComponent {
 
           if (server.defaultFolderName && folderOptions.length) {
             defaultFolder = folderOptions.find(folder => folder.id === server.defaultFolderName);
-          } else {
-            defaultFolder = { 'id': '', 'title': '' };
+          }
+
+          if (!defaultFolder) {
+            defaultFolder = { 'id': STORAGE.DEFAULT_FOLDER, 'text': STORAGE.DEFAULT_FOLDER };
           }
 
           return <section>

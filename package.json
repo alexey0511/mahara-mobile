@@ -23,6 +23,7 @@
     },
     "homepage": "https://github.com/holloway/mahara-mobile",
     "dependencies": {
+        "android-versions": "^1.3.0",
         "autoprefixer": "~6.0.1",
         "babel": "~6.3.26",
         "babel-plugin-transform-class-properties": "~6.11.5",

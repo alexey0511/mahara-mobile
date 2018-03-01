@@ -175,8 +175,7 @@ function MaharaState(state, action) {
             }
 
             if (!state.server.defaultFolderName) {
-                state.server.defaultFolderName = STORAGE.DEFAULT_FOLDER;
-              }
+              state.server.defaultFolderName = STORAGE.DEFAULT_FOLDER;
             }
             break;
         case STORAGE.SET_USER_LANGUAGE:
