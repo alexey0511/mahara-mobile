@@ -41,8 +41,8 @@ export default class MaharaSelector extends MaharaBaseComponent {
       } else {
         return  <div className="setting">
                   <div>
-                    <label htmlFor="default-journal">{this.props.label}:&nbsp;</label>
-                    <div id="default-journal">{this.props.defaultOption.text}</div>
+                    <label htmlFor={this.props.name}>{this.props.label}:&nbsp;</label>
+                    <div id={this.props.name}>{this.props.defaultOption.text}</div>
                   </div>
                   <button onClick={this.makeEditable} className="btn change-settings"></button>
                 </div>;
@@ -72,7 +72,7 @@ export default class MaharaSelector extends MaharaBaseComponent {
 
 MaharaSelector.propTypes = {
   label: PropTypes.string,
-  defaultOption: PropTypes.object,
+  defaultOption: PropTypes.object.isRequired,
   name: PropTypes.string,
   options: PropTypes.array,
   onSetSelection: PropTypes.func
