@@ -83,11 +83,11 @@ class Add extends MaharaBaseComponent {
   handleError(error) {
     alertify
         .okBtn(this.gettext("alert_ok_button"))
-        .alert("Error: " + " " + error);
+        .alert(this.gettext('record_audio_unavailable'));
   }
 
   recordAudio() {
-    navigator.device.capture.captureAudio(this.mediaCaptureSuccess, this.handleError, {limit:1});
+    navigator.device.capture.captureAudio(this.mediaCaptureSuccess, this.handleError.bind(this), {limit:1});
   }
 
   mediaCaptureSuccess(files) {
